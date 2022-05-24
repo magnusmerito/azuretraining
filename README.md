@@ -1,0 +1,2 @@
+# azuretraining
+Azure Training Test
