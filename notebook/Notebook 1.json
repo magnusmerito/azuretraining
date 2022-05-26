@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "3d3cc0ac-a1cd-4978-908d-293a9c2269f6"
+				"spark.autotune.trackingId": "b64ab89b-7e45-420e-83ff-ca5a882fa98f"
 			}
 		},
 		"metadata": {
@@ -336,6 +336,149 @@
 					"display(groupedTopPurchases.limit(100))"
 				],
 				"execution_count": 17
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"# Create a temporary view for top purchases so we can load from Scala\r\n",
+					"topPurchases.createOrReplaceTempView(\"top_purchases\")"
+				],
+				"execution_count": 18
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "scala"
+					}
+				},
+				"source": [
+					"\r\n",
+					"%%spark\r\n",
+					"// Make sure the name of the dedcated SQL pool (SQLPool01 below) matches the name of your SQL pool.\r\n",
+					"val df = spark.sqlContext.sql(\"select * from top_purchases\")\r\n",
+					"df.write.synapsesql(\"SQLPool01.wwi.TopPurchases\", Constants.INTERNAL)"
+				],
+				"execution_count": 20
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"dfsales = spark.read.load('abfss://wwi-02@' + datalake + '.dfs.core.windows.net/sale-small/Year=2019/Quarter=Q4/Month=12/*/*.parquet', format='parquet')\r\n",
+					"display(dfsales.limit(10))"
+				],
+				"execution_count": 21
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "scala"
+					}
+				},
+				"source": [
+					"\r\n",
+					"%%spark\r\n",
+					"// Make sure the name of the SQL pool (SQLPool01 below) matches the name of your SQL pool.\r\n",
+					"val df2 = spark.read.synapsesql(\"SQLPool01.wwi.TopPurchases\")\r\n",
+					"df2.createTempView(\"top_purchases_sql\")\r\n",
+					"\r\n",
+					"df2.head(10)\r\n",
+					""
+				],
+				"execution_count": 23
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"dfTopPurchasesFromSql = sqlContext.table(\"top_purchases_sql\")\r\n",
+					"\r\n",
+					"display(dfTopPurchasesFromSql.limit(10))"
+				],
+				"execution_count": 24
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"inner_join = dfsales.join(dfTopPurchasesFromSql,\r\n",
+					"    (dfsales.CustomerId == dfTopPurchasesFromSql.visitorId) & (dfsales.ProductId == dfTopPurchasesFromSql.productId))\r\n",
+					"\r\n",
+					"inner_join_agg = (inner_join.select(\"CustomerId\",\"TotalAmount\",\"Quantity\",\"itemsPurchasedLast12Months\",\"top_purchases_sql.productId\")\r\n",
+					"    .groupBy([\"CustomerId\",\"top_purchases_sql.productId\"])\r\n",
+					"    .agg(\r\n",
+					"        sum(\"TotalAmount\").alias(\"TotalAmountDecember\"),\r\n",
+					"        sum(\"Quantity\").alias(\"TotalQuantityDecember\"),\r\n",
+					"        sum(\"itemsPurchasedLast12Months\").alias(\"TotalItemsPurchasedLast12Months\"))\r\n",
+					"    .orderBy(\"CustomerId\") )\r\n",
+					"\r\n",
+					"display(inner_join_agg.limit(100))"
+				],
+				"execution_count": 25
 			}
 		]
 	}
