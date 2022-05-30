@@ -5,6 +5,9 @@
 		"workspaceName": {
 			"value": "asaworkspace2vez9lm"
 		},
+		"Brandstofprijzen_password": {
+			"value": ""
+		},
 		"asadatalake2vez9lm_accountKey": {
 			"value": ""
 		},
@@ -16,6 +19,18 @@
 		},
 		"sqlpool01_connectionString": {
 			"value": ""
+		},
+		"asacosmosdb01_connectionString": {
+			"value": ""
+		},
+		"Brandstofprijzen_properties_typeProperties_host": {
+			"value": "/home/frederik/CSV/80416ned_UntypedDataSet.csv"
+		},
+		"Brandstofprijzen_properties_typeProperties_userId": {
+			"value": "test"
+		},
+		"BrandstofprijzenHTTP_properties_typeProperties_url": {
+			"value": "https://opendata.cbs.nl/ODataFeed/odata/80416ned/UntypedDataSet"
 		},
 		"asadatalake2vez9lm_properties_typeProperties_url": {
 			"value": "https://asadatalake2vez9lm.dfs.core.windows.net"
