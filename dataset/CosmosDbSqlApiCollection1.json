@@ -1,0 +1,34 @@
+{
+	"name": "CosmosDbSqlApiCollection1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "asacosmosdb01",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {
+			"type": "object",
+			"properties": {
+				"userId": {
+					"type": "integer"
+				},
+				"cartId": {
+					"type": "string"
+				},
+				"preferredProducts": {
+					"type": "array",
+					"items": {
+						"type": "integer"
+					}
+				},
+				"productReviews": {
+					"type": "array"
+				}
+			}
+		},
+		"typeProperties": {
+			"collectionName": "OnlineUserProfile01"
+		}
+	}
+}
