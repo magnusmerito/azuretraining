@@ -1,0 +1,16 @@
+{
+	"name": "asacosmosdb01",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "CosmosDb",
+		"typeProperties": {
+			"connectionString": "AccountEndpoint=https://asacosmosdb2vez9lm.documents.azure.com:443/;Database=CustomerProfile;",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlNZTkFQU0VAMjlCMkE4QTAtQTM4OS00NDgxLUFFOTYtNkJCQTdCNjM1NDRCXzhlOGFlMDM3LTIwNGMtNDkwYi1hMzE3LTM2MzU2ODdmNzAxNCINCn0="
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
