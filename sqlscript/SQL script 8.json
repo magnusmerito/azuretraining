@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 8",
+	"properties": {
+		"content": {
+			"query": "SELECT * FROM sys.schemas WHERE name = 'wwi_staging'",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
