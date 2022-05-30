@@ -17,6 +17,9 @@
 			"transformations": [
 				{
 					"name": "MapCampaignAnalytics"
+				},
+				{
+					"name": "ConvertColumnTypesAndValues"
 				}
 			],
 			"scriptLines": [
@@ -49,7 +52,9 @@
 				"          State = {_col9_}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> MapCampaignAnalytics"
+				"     skipDuplicateMapOutputs: true) ~> MapCampaignAnalytics",
+				"MapCampaignAnalytics derive(Revenue = toDecimal(replace(concat(toString(RevenuePart1), toString(Revenue)), '\\\\', ''), 10, 2, '$###,###.##'),",
+				"          RevenueTarget = toDecimal(replace(concat(toString(RevenueTargetPart1), toString(RevenueTarget)), '\\\\', ''), 10, 2, '$###,###.##')) ~> ConvertColumnTypesAndValues"
 			]
 		}
 	}
