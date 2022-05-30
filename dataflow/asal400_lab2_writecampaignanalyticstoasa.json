@@ -13,7 +13,15 @@
 					"name": "CampaignAnalytics"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "asal400_campaign_analytics_source",
+						"type": "DatasetReference"
+					},
+					"name": "CampaignAnalyticsASA"
+				}
+			],
 			"transformations": [
 				{
 					"name": "MapCampaignAnalytics"
@@ -69,7 +77,24 @@
 				"          State",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectCampaignAnalyticsColumns"
+				"     skipDuplicateMapOutputs: true) ~> SelectCampaignAnalyticsColumns",
+				"SelectCampaignAnalyticsColumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Column_1 as string,",
+				"          Column_2 as string,",
+				"          Column_3 as string,",
+				"          Column_4 as string,",
+				"          Column_5 as string,",
+				"          Column_6 as string,",
+				"          Column_7 as string,",
+				"          Column_8 as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CampaignAnalyticsASA"
 			]
 		}
 	}
