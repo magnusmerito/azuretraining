@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 9",
+	"properties": {
+		"content": {
+			"query": "\nCREATE TABLE [wwi_staging].[SaleHeap]\n( \n    [TransactionId] [uniqueidentifier]  NOT NULL,\n    [CustomerId] [int]  NOT NULL,\n    [ProductId] [smallint]  NOT NULL,\n    [Quantity] [smallint]  NOT NULL,\n    [Price] [decimal](9,2)  NOT NULL,\n    [TotalAmount] [decimal](9,2)  NOT NULL,\n    [TransactionDate] [int]  NOT NULL,\n    [ProfitAmount] [decimal](9,2)  NOT NULL,\n    [Hour] [tinyint]  NOT NULL,\n    [Minute] [tinyint]  NOT NULL,\n    [StoreId] [smallint]  NOT NULL\n)\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n    HEAP\n)\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
