@@ -20,6 +20,9 @@
 				},
 				{
 					"name": "ConvertColumnTypesAndValues"
+				},
+				{
+					"name": "SelectCampaignAnalyticsColumns"
 				}
 			],
 			"scriptLines": [
@@ -54,7 +57,19 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> MapCampaignAnalytics",
 				"MapCampaignAnalytics derive(Revenue = toDecimal(replace(concat(toString(RevenuePart1), toString(Revenue)), '\\\\', ''), 10, 2, '$###,###.##'),",
-				"          RevenueTarget = toDecimal(replace(concat(toString(RevenueTargetPart1), toString(RevenueTarget)), '\\\\', ''), 10, 2, '$###,###.##')) ~> ConvertColumnTypesAndValues"
+				"          RevenueTarget = toDecimal(replace(concat(toString(RevenueTargetPart1), toString(RevenueTarget)), '\\\\', ''), 10, 2, '$###,###.##')) ~> ConvertColumnTypesAndValues",
+				"ConvertColumnTypesAndValues select(mapColumn(",
+				"          Region,",
+				"          Country,",
+				"          ProductCategory,",
+				"          CampaignName,",
+				"          Revenue,",
+				"          RevenueTarget,",
+				"          City,",
+				"          State",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectCampaignAnalyticsColumns"
 			]
 		}
 	}
