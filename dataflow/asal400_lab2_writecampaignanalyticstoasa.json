@@ -14,7 +14,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "MapCampaignAnalytics"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          {_col0_} as string,",
@@ -31,7 +35,21 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     skipLines: 1) ~> CampaignAnalytics"
+				"     skipLines: 1) ~> CampaignAnalytics",
+				"CampaignAnalytics select(mapColumn(",
+				"          Region = {_col0_},",
+				"          Country = {_col1_},",
+				"          ProductCategory = {_col2_},",
+				"          CampaignName = {_col3_},",
+				"          RevenuePart1 = {_col4_},",
+				"          Revenue = {_col5_},",
+				"          RevenueTargetPart1 = {_col6_},",
+				"          RevenueTarget = {_col7_},",
+				"          City = {_col8_},",
+				"          State = {_col9_}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> MapCampaignAnalytics"
 			]
 		}
 	}
