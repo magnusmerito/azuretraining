@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 16",
+	"properties": {
+		"content": {
+			"query": "SELECT * FROM [wwi_staging].DailySalesCounts\nORDER BY [Date] DESC\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SQLPool01",
+				"poolName": "SQLPool01"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
