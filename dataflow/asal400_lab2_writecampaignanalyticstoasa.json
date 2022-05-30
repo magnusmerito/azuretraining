@@ -1,0 +1,15 @@
+{
+	"name": "asal400_lab2_writecampaignanalyticstoasa",
+	"properties": {
+		"description": "Descr 1",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}
